@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import django_heroku
+import environ # new
+
+env = environ.Env() # new
+
+# reading .env file
+environ.Env.read_env() # new
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -127,6 +133,13 @@ BOOTSTRAP4 = { 'include_jquery': True }
 
 LOGIN_REDIRECT_URL = 'home' # new
 LOGOUT_REDIRECT_URL = 'home' # new
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # new
+EMAIL_HOST = 'smtp.gmail.com' # new
+EMAIL_HOST_USER = env.str('GMAIL_USERNAME') # new
+EMAIL_HOST_PASSWORD = env.str('GMAIL_PASSWORD') # new
+EMAIL_PORT = 587 # new
+EMAIL_USE_TLS = True # new
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
