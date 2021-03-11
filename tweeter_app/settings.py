@@ -12,12 +12,8 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 import django_heroku
-import environ # new
 
-env = environ.Env() # new
 
-# reading .env file
-environ.Env.read_env() # new
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -44,12 +40,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # new
 
+    'rest_framework',
+    'rest_framework.authtoken',
+    'allauth', # new
+    'allauth.account', # new
+    'allauth.socialaccount', # new
+    'rest_auth',
+    'rest_auth.registration', # new
     'bootstrap4',
-    'bootstrap_datepicker_plus', # new
+    'bootstrap_datepicker_plus',
 
-    'users', # new
-    'tweets', # new
+    'users',
+    'tweets',
+    'api',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser' # new
@@ -136,10 +141,23 @@ LOGOUT_REDIRECT_URL = 'home' # new
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' # new
 EMAIL_HOST = 'smtp.gmail.com' # new
-EMAIL_HOST_USER = env.str('GMAIL_USERNAME') # new
-EMAIL_HOST_PASSWORD = env.str('GMAIL_PASSWORD') # new
+EMAIL_HOST_USER =  'jacksontruong0305@gmail.com' # new
+EMAIL_HOST_PASSWORD = 'qrbwxsksdtligkgj' # new
 EMAIL_PORT = 587 # new
 EMAIL_USE_TLS = True # new
+
+SITE_ID = 1 # new
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [ # new
+        'rest_framework.authentication.TokenAuthentication', # new
+        'rest_framework.authentication.SessionAuthentication', # new
+],
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
